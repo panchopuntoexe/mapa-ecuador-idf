@@ -1,0 +1,29 @@
+# Archivos shapefile
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.sbn
+*.sbx
+
+# Archivos temporales
+*.tmp
+*.temp
+*.bak
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Carpetas de IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Archivos de log
+*.log
+
+# Node modules (si se usan en el futuro)
+node_modules/

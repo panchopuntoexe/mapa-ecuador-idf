@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Intensidad IDF Ecuador</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>IDF Ecuador</h1>
+            <p class="product-info">IMERG VO7 FINAL RUN (CORREGIDO)</p>
+            <div class="selectors">
+                <div class="selector-group">
+                    <label>Periodo de Retorno</label>
+                    <select id="periodoSelector">
+                        <option value="10">10 años</option>
+                        <option value="25">25 años</option>
+                        <option value="50" selected>50 años</option>
+                        <option value="100">100 años</option>
+                    </select>
+                </div>
+                <div class="selector-group">
+                    <label>Duración del Evento</label>
+                    <select id="duracionSelector">
+                        <option value="0.5" selected>30 min</option>
+                        <option value="2">2 horas</option>
+                        <option value="24">24 horas</option>
+                        <option value="6">6 horas</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="map-wrapper">
+            <div class="map-container" id="mapContainer">
+                <canvas id="mapCanvas"></canvas>
+                <div id="tooltip" class="tooltip"></div>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Cargando...</p>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="zoomIn" class="control-btn" title="Zoom In">+</button>
+                <button id="zoomOut" class="control-btn" title="Zoom Out">−</button>
+                <button id="resetView" class="control-btn" title="Restablecer vista">⟲</button>
+            </div>
+
+            <div class="zoom-info">
+                Zoom: <span id="zoomLevel">100%</span>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="legend">
+                <div class="legend-header">
+                    <h3>Intensidad</h3>
+                    <span class="unit">mm/h</span>
+                </div>
+                <div id="legendScale" class="legend-scale"></div>
+                <div class="legend-labels">
+                    <span id="minValue">0</span>
+                    <span id="maxValue">100</span>
+                </div>
+            </div>
+
+            <div class="info-panel" id="infoPanel">
+                <div class="info-item">
+                    <div class="info-header">
+                        <span class="label">Posición Pixel</span>
+                        <button class="copy-btn" data-copy="position" title="Copiar posición">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <span id="position" class="value">Click en el mapa</span>
+                </div>
+                <div class="info-item">
+                    <div class="info-header">
+                        <span class="label">Intensidad</span>
+                        <button class="copy-btn" data-copy="intensity" title="Copiar intensidad">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <span id="intensity" class="value">—</span>
+                </div>
+                <div class="info-item">
+                    <div class="info-header">
+                        <span class="label">Coordenadas WGS84</span>
+                        <button class="copy-btn" data-copy="coordinates" title="Copiar coordenadas">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <span id="coordinates" class="value">—</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <footer>
+            <p>Made By <strong>Hexagonal</strong></p>
+        </footer>
+    </div>
+
+    <!-- Librerías necesarias -->
+    <script src="https://cdn.jsdelivr.net/npm/geotiff@2.0.7/dist-browser/geotiff.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
