@@ -30,6 +30,30 @@ let pinnedData = null;
 // Variable para el archivo actual
 let currentFile = 'IDF_T50_0.5h_intensidad.tif';
 
+// Configuración por producto de precipitación satelital
+const PRODUCTS = {
+    imerg: {
+        name: 'IMERG V07 FINAL RUN (CORREGIDO)',
+        folder: '',
+        durations: [
+            { value: '0.5', label: '30 min' },
+            { value: '2', label: '2 horas' },
+            { value: '6', label: '6 horas' },
+            { value: '24', label: '24 horas' }
+        ],
+        defaultDuration: '0.5'
+    },
+    mswep: {
+        name: 'MSWEP V2.8',
+        folder: 'MSWEP V2.8/',
+        durations: [
+            { value: '6', label: '6 horas' },
+            { value: '24', label: '24 horas' }
+        ],
+        defaultDuration: '6'
+    }
+};
+
 // Paleta de colores mejorada para intensidad de lluvia
 const colorScale = [
     { value: 0.0, color: [49, 54, 149] },      // Azul oscuro
@@ -83,7 +107,7 @@ async function loadGeoTIFF(filename = currentFile) {
         console.log('Cargando archivo GeoTIFF:', filename);
         loading.classList.remove('hidden');
 
-        const response = await fetch(filename);
+        const response = await fetch(encodeURI(filename));
         const arrayBuffer = await response.arrayBuffer();
 
         const tiff = await GeoTIFF.fromArrayBuffer(arrayBuffer);
@@ -202,12 +226,43 @@ function resetView() {
     positionCanvas();
 }
 
+function getCurrentProduct() {
+    return PRODUCTS[document.getElementById('productoSelector').value];
+}
+
+function updateProductInfo() {
+    const product = getCurrentProduct();
+    document.getElementById('productName').textContent = product.name;
+}
+
+function updateDuracionOptions() {
+    const product = getCurrentProduct();
+    const duracionSelector = document.getElementById('duracionSelector');
+    const currentValue = duracionSelector.value;
+    const availableValues = product.durations.map(d => d.value);
+
+    duracionSelector.innerHTML = product.durations
+        .map(d => `<option value="${d.value}">${d.label}</option>`)
+        .join('');
+
+    duracionSelector.value = availableValues.includes(currentValue)
+        ? currentValue
+        : product.defaultDuration;
+}
+
 // Construir nombre de archivo según selectores
 function getFileName() {
+    const product = getCurrentProduct();
     const periodo = document.getElementById('periodoSelector').value;
     const duracion = document.getElementById('duracionSelector').value;
 
-    return `IDF_T${periodo}_${duracion}h_intensidad.tif`;
+    return `${product.folder}IDF_T${periodo}_${duracion}h_intensidad.tif`;
+}
+
+function onProductChange() {
+    updateProductInfo();
+    updateDuracionOptions();
+    changeFile();
 }
 
 // Cambiar archivo según selectores
@@ -392,6 +447,7 @@ document.getElementById('resetView').addEventListener('click', () => {
 });
 
 // Event listeners para selectores
+document.getElementById('productoSelector').addEventListener('change', onProductChange);
 document.getElementById('periodoSelector').addEventListener('change', changeFile);
 document.getElementById('duracionSelector').addEventListener('change', changeFile);
 
@@ -408,6 +464,8 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
 
 // Cargar el mapa cuando la página esté lista
 window.addEventListener('load', () => {
+    updateProductInfo();
+    updateDuracionOptions();
     currentFile = getFileName();
     loadGeoTIFF(currentFile);
 });

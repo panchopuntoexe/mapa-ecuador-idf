@@ -13,12 +13,20 @@
     <div class="container">
         <header>
             <h1>IDF Ecuador</h1>
-            <h2 class="product-info">IMERG VO7 FINAL RUN (CORREGIDO)</h2>
+            <h3 class="product-info" id="productName">IMERG V07 FINAL RUN (CORREGIDO)</h3>
+
             <p class="product-info">Escuela Politécnica Nacional,</p>
             <p class="product-info">Maestría en Hidráulica</p>
             <p class="product-info">Proyecto de titulación: Desarrollo de curvas IDF (Intensidad-Duración-Frecuencia) a partir de correcciones a productos de precipitación satelital para el Ecuador.</p>
             <p class="product-info">Desarrollado por: Ing. Andy Salazar B.</p>
             <div class="selectors">
+                <div class="selector-group">
+                    <label>Producto Satelital</label>
+                    <select id="productoSelector">
+                        <option value="imerg" selected>IMERG V07</option>
+                        <option value="mswep">MSWEP V2.8</option>
+                    </select>
+                </div>
                 <div class="selector-group">
                     <label>Periodo de Retorno</label>
                     <select id="periodoSelector">
