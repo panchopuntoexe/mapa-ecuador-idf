@@ -15,7 +15,7 @@ const tooltip = document.getElementById('tooltip');
 const loading = document.getElementById('loading');
 const mapContainer = document.getElementById('mapContainer');
 // Variables para zoom y pan
-let scale = 7.53; // Zoom inicial para ver el mapa completo
+// Zoom y pan
 const BASE_SCALE = 7.53; // Zoom inicial = vista completa (100%)
 const MIN_SCALE = BASE_SCALE / 5; // Permite alejar hasta ~20%
 const MAX_SCALE = BASE_SCALE * 25; // Permite acercar hasta ~2500%
@@ -171,7 +171,6 @@ function positionCanvas() {
     canvas.style.top = '50%';
     canvas.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px)) scale(${scale})`;
     // Actualizar indicador de zoom
-    const zoomPercentage = Math.round((scale / 7.53) * 100);
     const zoomPercentage = Math.round((scale / BASE_SCALE) * 100);
     document.getElementById('zoomLevel').textContent = zoomPercentage + '%';
 }
