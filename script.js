@@ -17,7 +17,7 @@ const mapContainer = document.getElementById('mapContainer');
 // Variables para zoom y pan
 // Zoom y pan
 const BASE_SCALE = 7.53; // Zoom inicial = vista completa (100%)
-const MIN_SCALE = BASE_SCALE / 5; // Permite alejar hasta ~20%
+const MIN_SCALE = BASE_SCALE / 7; // Permite alejar hasta ~0%
 const MAX_SCALE = BASE_SCALE * 25; // Permite acercar hasta ~2500%
 let scale = BASE_SCALE;
 let offsetX = 0;
